@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">RonasIt</string>
+    <string name="change_city">Сменить город</string>
+    <string name="my_location">Моё местоположение</string>
+    <string name="wind">Ветер</string>
+    <string name="humidity">Влажность</string>
+    <string name="pressure">Давление</string>
+    <string name="chance_of_rain">Вероятность дождя</string>
+    <string name="weather_api">dbd3b02d8958d62185d02e944cd5f522</string>
+</resources>
