@@ -41,7 +41,7 @@ class SplashScreen : AppCompatActivity() {
                 }
             }
             if(location == null) return
-            WeatherAsync().execute();
+            WeatherAsync().execute()
         }else{
             Toast.makeText(this, "Отсутствиет соединение с интернетом, перезапустите приложение", Toast.LENGTH_SHORT).show()
         }
