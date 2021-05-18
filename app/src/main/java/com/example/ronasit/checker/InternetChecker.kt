@@ -3,6 +3,7 @@ package com.example.ronasit.checker
 import android.content.Context
 import android.net.ConnectivityManager
 
+@Suppress("DEPRECATION")
 class InternetChecker {
     companion object{
         @JvmStatic

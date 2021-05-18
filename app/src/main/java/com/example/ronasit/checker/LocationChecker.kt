@@ -10,7 +10,6 @@ import androidx.core.app.ActivityCompat
 
 class LocationChecker {
     companion object {
-
         @JvmStatic
         fun getPermission(context : Context) {
             if (ActivityCompat.checkSelfPermission(

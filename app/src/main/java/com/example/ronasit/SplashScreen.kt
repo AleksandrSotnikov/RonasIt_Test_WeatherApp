@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.ronasit
 
 import android.annotation.SuppressLint
@@ -18,7 +20,8 @@ import java.net.URL
 
 
 private var locationManager : LocationManager? = null
-private var location : Location? = null
+private var location: Location? = null
+private var city: String? = null
 
 class SplashScreen : AppCompatActivity() {
     @SuppressLint("MissingPermission")
@@ -26,36 +29,57 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         LocationChecker.getPermission(this)
-        if(InternetChecker.hasConnection(this)){
-            locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-            location = when {
-                LocationChecker.checkEnabledNetwork(locationManager) -> {
-                    locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                }
-                LocationChecker.checkEnabledGPS(locationManager) -> {
-                    locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                }
-                else -> {
-                    Toast.makeText(this,"Отсутвует соедиенения со службами определения местоположения",Toast.LENGTH_LONG).show()
-                    return
+        city = intent.getStringExtra("city")
+        Log.e("112233", city.toString())
+        if (InternetChecker.hasConnection(this)) {
+            if (city == null) {
+                locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+                location = when {
+                    LocationChecker.checkEnabledNetwork(locationManager) -> {
+                        locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    }
+                    LocationChecker.checkEnabledGPS(locationManager) -> {
+                        locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    }
+                    else -> {
+                        Toast.makeText(
+                            this,
+                            "Отсутвует соедиенения со службами определения местоположения",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        startActivity(Intent(this@SplashScreen,CitySearch::class.java))
+                        this@SplashScreen.finish()
+                        return
+                    }
                 }
             }
-            if(location == null) return
+            if (location == null) return
             WeatherAsync().execute()
         }else{
             Toast.makeText(this, "Отсутствиет соединение с интернетом, перезапустите приложение", Toast.LENGTH_SHORT).show()
         }
     }
 
+    @Suppress("DEPRECATION")
+    @SuppressLint("StaticFieldLeak")
     inner class WeatherAsync : AsyncTask<Void, Void, String>() {
         override fun doInBackground(vararg params: Void): String? {
-            val urlWeatherString = "http://api.openweathermap.org/data/2.5/weather?"
-                .plus("lat=")
-                .plus(location!!.latitude)
-                .plus("&lon=")
-                .plus(location!!.longitude)
+            var urlWeatherString: String = "http://api.openweathermap.org/data/2.5/weather?"
+                .plus("lang=ru")
+                .plus("&units=metric")
                 .plus("&appid=")
                 .plus(baseContext.getString(R.string.weather_api))
+            urlWeatherString = if (city == null) {
+                urlWeatherString
+                    .plus("&lat=")
+                    .plus(location!!.latitude)
+                    .plus("&lon=")
+                    .plus(location!!.longitude)
+            } else {
+                urlWeatherString
+                    .plus("&q=")
+                    .plus(city)
+            }
             val inputHttpWeather: InputStream = URL(urlWeatherString)
                 .openConnection()
                 .inputStream as InputStream
@@ -67,6 +91,7 @@ class SplashScreen : AppCompatActivity() {
             super.onPostExecute(result)
             val mainIntent = Intent(this@SplashScreen, MainActivity::class.java)
             mainIntent.putExtra("weather", result)
+            if(city == null) mainIntent.putExtra("isCheck", true)
             this@SplashScreen.startActivity(mainIntent)
             this@SplashScreen.finish()
         }
