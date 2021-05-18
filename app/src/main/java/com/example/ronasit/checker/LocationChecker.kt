@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat
 class LocationChecker {
     companion object {
         @JvmStatic
-        fun getPermission(context : Context) {
+        fun getPermission(context: Context) {
             if (ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -29,12 +29,12 @@ class LocationChecker {
         }
 
         @JvmStatic
-        fun checkEnabledGPS(locationManager : LocationManager?) : Boolean {
+        fun checkEnabledGPS(locationManager: LocationManager?): Boolean {
             return locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
         }
 
         @JvmStatic
-        fun checkEnabledNetwork(locationManager : LocationManager?) : Boolean {
+        fun checkEnabledNetwork(locationManager: LocationManager?): Boolean {
             return locationManager?.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ?: false
         }
     }

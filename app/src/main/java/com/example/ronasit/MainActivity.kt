@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         apiWeather = Gson().fromJson(intent.getStringExtra("weather"), ApiWeather::class.java)
         init()
         fillActivity()
-        if(intent.getBooleanExtra("isCheck",false))apiWeather!!.name?.let { createDialog(it) }
+        if (intent.getBooleanExtra("isCheck", false)) apiWeather!!.name?.let { createDialog(it) }
     }
 
     private fun fillActivity() {
@@ -67,19 +67,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onClickMyLocation(view :View){
-        startActivity(Intent(this@MainActivity,SplashScreen::class.java))
+    fun onClickMyLocation(view: View) {
+        startActivity(Intent(this@MainActivity, SplashScreen::class.java))
         this@MainActivity.finish()
     }
 
-    fun onClickCityChange(view : View) {
+    fun onClickCityChange(view: View) {
         startActivity(Intent(this@MainActivity, CitySearch::class.java))
     }
-    private fun createDialog(city:String){
+
+    private fun createDialog(city: String) {
         val builder = AlertDialog.Builder(this@MainActivity)
         builder
             .setTitle("Ваш город $city?")
-            .setPositiveButton("Да"){_,_ ->}
+            .setPositiveButton("Да") { _, _ -> }
             .setNegativeButton("Нет") { _, _ ->
                 startActivity(Intent(this@MainActivity, CitySearch::class.java))
             }

@@ -19,7 +19,7 @@ import java.io.InputStreamReader
 import java.net.URL
 
 
-private var locationManager : LocationManager? = null
+private var locationManager: LocationManager? = null
 private var location: Location? = null
 private var city: String? = null
 
@@ -47,7 +47,7 @@ class SplashScreen : AppCompatActivity() {
                             "Отсутвует соедиенения со службами определения местоположения",
                             Toast.LENGTH_LONG
                         ).show()
-                        startActivity(Intent(this@SplashScreen,CitySearch::class.java))
+                        startActivity(Intent(this@SplashScreen, CitySearch::class.java))
                         this@SplashScreen.finish()
                         return
                     }
@@ -55,8 +55,12 @@ class SplashScreen : AppCompatActivity() {
             }
             if (location == null) return
             WeatherAsync().execute()
-        }else{
-            Toast.makeText(this, "Отсутствиет соединение с интернетом, перезапустите приложение", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(
+                this,
+                "Отсутствиет соединение с интернетом, перезапустите приложение",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -91,7 +95,7 @@ class SplashScreen : AppCompatActivity() {
             super.onPostExecute(result)
             val mainIntent = Intent(this@SplashScreen, MainActivity::class.java)
             mainIntent.putExtra("weather", result)
-            if(city == null) mainIntent.putExtra("isCheck", true)
+            if (city == null) mainIntent.putExtra("isCheck", true)
             this@SplashScreen.startActivity(mainIntent)
             this@SplashScreen.finish()
         }
