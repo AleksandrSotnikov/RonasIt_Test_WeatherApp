@@ -8,7 +8,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ronasit.checker.InternetChecker
@@ -30,7 +29,6 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         LocationChecker.getPermission(this)
         city = intent.getStringExtra("city")
-        Log.e("112233", city.toString())
         if (InternetChecker.hasConnection(this)) {
             if (city == null) {
                 locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
@@ -53,7 +51,11 @@ class SplashScreen : AppCompatActivity() {
                     }
                 }
             }
-            if (location == null) return
+            if (location == null && city == null) {
+                startActivity(Intent(this@SplashScreen, SplashScreen::class.java))
+                this@SplashScreen.finish()
+                return
+            }
             WeatherAsync().execute()
         } else {
             Toast.makeText(
