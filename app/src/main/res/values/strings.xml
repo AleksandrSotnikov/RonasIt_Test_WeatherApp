@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RonasIt</string>
+    <string name="app_name">Погода</string>
     <string name="change_city">Сменить город</string>
     <string name="my_location">Моё местоположение</string>
     <string name="wind">Ветер</string>
