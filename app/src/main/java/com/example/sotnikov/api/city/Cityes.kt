@@ -1,4 +1,4 @@
-package com.example.ronasit.api.city
+package com.example.sotnikov.api.city
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

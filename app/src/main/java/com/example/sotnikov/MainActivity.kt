@@ -1,4 +1,4 @@
-package com.example.ronasit
+package com.example.sotnikov
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -8,11 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import com.example.ronasit.api.weather.ApiWeather
+import com.example.sotnikov.api.weather.ApiWeather
+import com.example.sotnikov.checker.LocationChecker
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
+    lateinit var mAdView: AdView
     private var switch: SwitchCompat? = null
     private var apiWeather: ApiWeather? = null
     private var imageWeather: ImageView? = null
@@ -27,9 +32,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MobileAds.initialize(this) {}
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
         apiWeather = Gson().fromJson(intent.getStringExtra("weather"), ApiWeather::class.java)
         init()
         fillActivity()
+        LocationChecker.getPermission(this)
         if (intent.getBooleanExtra("isCheck", false)) apiWeather!!.name?.let { createDialog(it) }
     }
 

@@ -1,5 +1,4 @@
-package com.example.ronasit.checker
-
+package com.example.sotnikov.checker
 import android.content.Context
 import android.net.ConnectivityManager
 
@@ -23,3 +22,4 @@ class InternetChecker {
         }
     }
 }
+

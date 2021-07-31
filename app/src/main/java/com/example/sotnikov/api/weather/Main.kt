@@ -1,4 +1,4 @@
-package com.example.ronasit.api.weather
+package com.example.sotnikov.api.weather
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

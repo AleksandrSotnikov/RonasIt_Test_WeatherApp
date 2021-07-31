@@ -1,4 +1,4 @@
-package com.example.ronasit
+package com.example.sotnikov
 
 import org.junit.Test
 

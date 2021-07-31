@@ -1,4 +1,4 @@
-package com.example.ronasit.checker
+package com.example.sotnikov.checker
 
 import android.Manifest
 import android.app.Activity

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ronasit">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.sotnikov">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -16,17 +18,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CitySearch"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SplashScreen"
-            android:screenOrientation="portrait">
+        <activity
+            android:name="com.example.sotnikov.NoInternet"
+            android:exported="true" />
+        <activity
+            android:name="com.example.sotnikov.CitySearch"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.example.sotnikov.SplashScreen"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.example.sotnikov.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9086167228847652~9894570963" />
     </application>
 
 </manifest>

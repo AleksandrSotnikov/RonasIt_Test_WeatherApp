@@ -1,4 +1,4 @@
-package com.example.ronasit
+package com.example.sotnikov
 
 import android.content.Intent
 import android.os.Build
@@ -8,7 +8,7 @@ import android.text.TextWatcher
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ronasit.api.city.Cityes
+import com.example.sotnikov.api.city.Cityes
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader

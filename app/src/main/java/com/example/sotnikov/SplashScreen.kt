@@ -1,17 +1,22 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.ronasit
+package com.example.sotnikov
+
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ronasit.checker.InternetChecker
-import com.example.ronasit.checker.LocationChecker
+import com.example.sotnikov.checker.InternetChecker
+import com.example.sotnikov.checker.LocationChecker
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -21,8 +26,10 @@ import java.net.URL
 private var locationManager: LocationManager? = null
 private var location: Location? = null
 private var city: String? = null
+private var geolocationEnabled = false
 
 class SplashScreen : AppCompatActivity() {
+
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +61,6 @@ class SplashScreen : AppCompatActivity() {
             if (location == null && city == null) {
                 startActivity(Intent(this@SplashScreen, SplashScreen::class.java))
                 this@SplashScreen.finish()
-                return
             }
             WeatherAsync().execute()
         } else {
@@ -63,6 +69,8 @@ class SplashScreen : AppCompatActivity() {
                 "Отсутствиет соединение с интернетом, перезапустите приложение",
                 Toast.LENGTH_SHORT
             ).show()
+            startActivity(Intent(this@SplashScreen, NoInternet::class.java))
+            this@SplashScreen.finish()
         }
     }
 
@@ -101,5 +109,37 @@ class SplashScreen : AppCompatActivity() {
             this@SplashScreen.startActivity(mainIntent)
             this@SplashScreen.finish()
         }
+    }
+
+    private fun checkLocationServiceEnabled(): Boolean {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        try {
+            geolocationEnabled = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (ex: Exception) {
+        }
+        return geolocationEnabled
+    }
+
+    private fun buildAlertMessageNoLocationService(network_enabled: Boolean): Boolean {
+        val msg = if (!network_enabled) resources.getString(R.string.msg_switch_network) else null
+        var click = false
+        if (msg != null) {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setCancelable(false)
+                .setMessage(msg)
+                .setPositiveButton("Включить",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                        click = true
+                    })
+                .setNegativeButton("Отмена",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        click = false
+                    })
+            val alert: AlertDialog = builder.create()
+            alert.show()
+            return click
+        }
+        return false
     }
 }
