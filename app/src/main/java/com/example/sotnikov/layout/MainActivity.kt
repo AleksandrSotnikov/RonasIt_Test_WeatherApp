@@ -1,15 +1,20 @@
-package com.example.sotnikov
+package com.example.sotnikov.layout
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import com.example.sotnikov.R
 import com.example.sotnikov.api.weather.ApiWeather
 import com.example.sotnikov.checker.LocationChecker
+import com.example.sotnikov.library.TinyDB
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -17,6 +22,7 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var mAdView: AdView
     private var switch: SwitchCompat? = null
     private var apiWeather: ApiWeather? = null
@@ -29,15 +35,16 @@ class MainActivity : AppCompatActivity() {
     private var humidity: TextView? = null
     private var type: TextView? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         MobileAds.initialize(this) {}
+        TinyDB.setPreferences(PreferenceManager.getDefaultSharedPreferences(this))
 
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
-
         apiWeather = Gson().fromJson(intent.getStringExtra("weather"), ApiWeather::class.java)
         init()
         fillActivity()
@@ -86,6 +93,10 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickCityChange(view: View) {
         startActivity(Intent(this@MainActivity, CitySearch::class.java))
+    }
+
+    fun onClickNews(view: View) {
+        startActivity(Intent(this@MainActivity, NewsSites::class.java))
     }
 
     private fun createDialog(city: String) {

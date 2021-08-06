@@ -1,4 +1,4 @@
-package com.example.sotnikov
+package com.example.sotnikov.layout
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sotnikov.R
 
 class NoInternet : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

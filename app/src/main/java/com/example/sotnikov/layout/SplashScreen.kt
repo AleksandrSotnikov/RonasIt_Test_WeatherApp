@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.sotnikov
+package com.example.sotnikov.layout
 
 
 import android.annotation.SuppressLint
@@ -15,6 +15,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sotnikov.R
 import com.example.sotnikov.checker.InternetChecker
 import com.example.sotnikov.checker.LocationChecker
 import java.io.BufferedReader

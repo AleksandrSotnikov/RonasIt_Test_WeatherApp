@@ -1,4 +1,4 @@
-package com.example.sotnikov
+package com.example.sotnikov.layout
 
 import android.content.Intent
 import android.os.Build
@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sotnikov.R
 import com.example.sotnikov.api.city.Cityes
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -28,6 +29,7 @@ class CitySearch : AppCompatActivity() {
         Gson().fromJson(result, Cityes::class.java).cityes!!.forEach { x ->
             cityList.add(x.name.toString())
         }
+        cityList.sort()
         val cityListView = findViewById<ListView>(R.id.listCity)
         arrayAdapter = ArrayAdapter(
             this,
